@@ -4,8 +4,10 @@ const port = 3000;
 
 app.use(express.json());
 
+let notifyResponse = ""
+
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send(notifyResponse ? notifyResponse : 'No data received yet');
 });
 
 app.get('/user/:id', (req, res) => {
@@ -16,8 +18,10 @@ app.get('/user/:id', (req, res) => {
 // POST endpoint
 app.post('/notify', (req, res) => {
     const data = req.body;
-    res.send(`${JSON.stringify(data)}`);
-    console.log(`data received: ${JSON.stringify(data)}`)
+    const { job_id, workspace_name, description, datetime, change, summarizer } = data;
+    notifyResponse = `Job ID: ${job_id}\nWorkspace Name: ${workspace_name}\nDescription: ${description}\nDate Time: ${datetime}\nChange: ${change}\nSummary: ${summarizer}`;
+    res.send(notifyResponse);
+    console.log(`data received: ${notifyResponse}`)
 });
 
 app.listen(port, () => {
