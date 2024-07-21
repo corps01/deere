@@ -12,6 +12,8 @@ app.use(express.json());
 
 const serp_api_key = "4f5787658f22e8fa611783f9ca079bf9a1e8b91c7610aff577c8bd384aa31a4d";
 
+let notifyResponse = []
+
 // Create HTTP server and integrate with Socket.IO
 const server = http.createServer(app);
 const io = socketIo(server);
@@ -24,7 +26,7 @@ io.on('connection', (socket) => {
 });
 
 app.get('/', (req, res) => {
-    res.send(notifyResponse ? notifyResponse : 'No data received yet');
+    res.send(notifyResponse ? JSON.stringify(notifyResponse) : 'No data received yet');
 });
 
 app.get('/search/:state/:city', (req, res) => {
@@ -56,6 +58,7 @@ app.post('/notify', (req, res) => {
     io.emit('notification', data);
     res.status(200).send('update emitted');
     console.log(`data received: ${JSON.stringify(data)}`);
+    notifyResponse.push(data)
 });
 
 server.listen(port, () => {
