@@ -16,7 +16,13 @@ let notifyResponse = []
 
 // Create HTTP server and integrate with Socket.IO
 const server = http.createServer(app);
-const io = socketIo(server);
+const io = socketIo(server, {
+    cors: {
+        origin: "http://localhost:4200",
+        methods: ["GET", "POST"],
+        credentials: true
+    }
+});
 
 io.on('connection', (socket) => {
     console.log('A user connected');
@@ -58,7 +64,7 @@ app.post('/notify', (req, res) => {
     io.emit('notification', data);
     res.status(200).send('update emitted');
     console.log(`data received: ${JSON.stringify(data)}`);
-    notifyResponse.push(data)
+    notifyResponse.push(data);
 });
 
 server.listen(port, () => {
