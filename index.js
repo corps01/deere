@@ -1,40 +1,63 @@
 const express = require('express');
+const { getJson } = require("serpapi");
+const cors = require('cors');
+const http = require('http');
+const socketIo = require('socket.io');
+
 const app = express();
 const port = 3000;
 
+app.use(cors());
 app.use(express.json());
 
-let notifyResponse = ""
+const serp_api_key = "4f5787658f22e8fa611783f9ca079bf9a1e8b91c7610aff577c8bd384aa31a4d";
+
+// Create HTTP server and integrate with Socket.IO
+const server = http.createServer(app);
+const io = socketIo(server);
+
+io.on('connection', (socket) => {
+    console.log('A user connected');
+    socket.on('disconnect', () => {
+        console.log('User disconnected');
+    });
+});
 
 app.get('/', (req, res) => {
     res.send(notifyResponse ? notifyResponse : 'No data received yet');
 });
 
-app.get('/user/:id', (req, res) => {
-    const userId = req.params.id;
-    res.send(`User ID: ${userId}`);
+app.get('/search/:state/:city', (req, res) => {
+    const state = req.params.state;
+    const city = req.params.city;
+
+    getJson({
+        engine: "google",
+        api_key: serp_api_key,
+        q: `Recent tax incentives for electric motors 2024 in ${city}, ${state}`,
+        location: `${city}, ${state}`,
+        num: "100"
+    }, (json) => {
+        if (json.error) {
+            res.status(500).send(json.error);
+            console.error(json.error);
+        } else {
+            res.send(json["organic_results"]);
+            console.log(json["organic_results"]);
+        }
+    }).catch(err => {
+        res.status(500).send('Error fetching data from SerpApi');
+        console.error(err);
+    });
 });
 
-// POST endpoint
 app.post('/notify', (req, res) => {
     const data = req.body;
-    const { job_id, workspace_name, description, datetime, change, summarizer, added_text, removed_text } = data;
-
-    notifyResponse = `
-    <p><b>Job ID:</b> ${job_id}</p>
-    <p><b>Workspace Name:</b> ${workspace_name}</p>
-    <p><b>Description:</b> ${description}</p>
-    <p><b>Date Time:</b> ${datetime}</p>
-    <p><b>Change:</b> ${change}</p>
-    <p><b>Added Text:</b> ${added_text}</p>
-    <p><b>Removed Text:</b> ${removed_text}</p>
-    <p><b>Summary:</b> ${summarizer}</p>
-    `;
-
-    res.send(notifyResponse);
-    console.log(`data received: ${notifyResponse}`)
+    io.emit('notification', data);
+    res.status(200).send('update emitted');
+    console.log(`data received: ${JSON.stringify(data)}`);
 });
 
-app.listen(port, () => {
-    console.log(`notification app listening at http://localhost:${port}`);
+server.listen(port, () => {
+    console.log(`Notification app listening at http://localhost:${port}`);
 });
