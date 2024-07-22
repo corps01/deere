@@ -35,15 +35,14 @@ app.get('/', (req, res) => {
     res.send(notifyResponse ? JSON.stringify(notifyResponse) : 'No data received yet');
 });
 
-app.get('/search/:state/:city', (req, res) => {
+app.get('/search/:state', (req, res) => {
     const state = req.params.state;
-    const city = req.params.city;
 
     getJson({
         engine: "google",
         api_key: serp_api_key,
-        q: `Recent tax incentives for electric motors 2024 in ${city}, ${state}`,
-        location: `${city}, ${state}`,
+        q: `Recent tax incentives for electric motors 2024 in ${state}`,
+        location: `${state}`,
         num: "100"
     }, (json) => {
         if (json.error) {
