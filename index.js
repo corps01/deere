@@ -60,10 +60,10 @@ app.get('/search/:state', (req, res) => {
 
 app.post('/notify', (req, res) => {
     const data = req.body;
-    io.emit('notification', data);
-    res.status(200).send('update emitted');
     console.log(`data received: ${JSON.stringify(data)}`);
     notifyResponse.push(data);
+    io.emit('notification', notifyResponse);
+    res.status(200).send('update emitted');
 });
 
 server.listen(port, () => {
