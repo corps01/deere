@@ -12,7 +12,29 @@ app.use(express.json());
 
 const serp_api_key = "4f5787658f22e8fa611783f9ca079bf9a1e8b91c7610aff577c8bd384aa31a4d";
 
-let notifyResponse = []
+let notifyResponse = [{
+    job_id: 5498327,
+    workspace_id: 34159,
+    workspace_name: '📗 Workspace 1',
+    url: 'https://rumzerincentives.wordpress.com/2024/07/01/7/',
+    description: 'WordPress',
+    datetime:
+        'Mon Jul 22 2024 13:51:38 GMT+0000 (Coordinated Universal Time)',
+    preview:
+        'https://vp-files-ore.s3.us-west-2.amazonaws.com/resources/3months/2rs5BKKAbstn1NM3EPDGKLeUgOw~vPOqqYwBCcNET2MVsHYIX2KhYoA_diff.png',
+    original:
+        'https://s3.us-west-2.amazonaws.com/vp-files-ore/resources/3months/2rs5BKKAbstn1NM3EPDGKLeUgOw.png',
+    change: '0.10189845716161505 %',
+    view_changes:
+        'https://visualping.io/autologin?redirect=%2Fjobs%2F5498327%3Fmode%3Dvisual',
+    text_changes:
+        'https://vp-files-ore.s3.us-west-2.amazonaws.com/resources/3months/2rs5BKKAbstn1NM3EPDGKLeUgOw~vPOqqYwBCcNET2MVsHYIX2KhYoA_diff.html',
+    added_text: '35; 25',
+    removed_text: '55; 35',
+    summarizer:
+        'Taxpayers will now receive a 35% deduction on state income tax for electric motor trucks, down from 55%, and a 25% reduction in property taxes for related facilities, down from 35%.',
+    important: 'no analyzer call',
+},]
 
 // Create HTTP server and integrate with Socket.IO
 const server = http.createServer(app);
