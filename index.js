@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 const { getJson } = require("serpapi");
 const cors = require('cors');
 const http = require('http');
@@ -10,7 +11,7 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-const serp_api_key = "4f5787658f22e8fa611783f9ca079bf9a1e8b91c7610aff577c8bd384aa31a4d";
+const serp_api_key = process.env.SERP_API_KEY
 
 let notifyResponse = [{
     job_id: 5498327,
