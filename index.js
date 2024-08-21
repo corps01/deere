@@ -11,7 +11,7 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-const serp_api_key = process.env
+const serp_api_key = process.env.SERP_API_KEY
 
 let notifyResponse = []
 
