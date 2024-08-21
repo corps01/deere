@@ -43,7 +43,7 @@ app.get('/search', (req, res) => {
         engine: "google",
         api_key: serp_api_key,
         q: `Baoding LYSZD Trade and Business Co., Ltd. `,
-        location: `${state}`,
+        location: `United States`,
         num: "100"
     }, (json) => {
         if (json.error) {
