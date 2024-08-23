@@ -13,7 +13,7 @@ app.use(express.json());
 
 const serp_api_key = "4f5787658f22e8fa611783f9ca079bf9a1e8b91c7610aff577c8bd384aa31a4d"
 
-let notifyResponse = []
+let notifyResponse = [{ "job_id": 5666044, "workspace_id": 36641, "workspace_name": "📗 Workspace 1", "url": "https://rumzerincentives.wordpress.com/2024/07/01/the-art-of-connection/", "description": "UFLPA Entity List", "datetime": "Fri Aug 23 2024 00:24:08 GMT+0000 (Coordinated Universal Time)", "preview": "https://vp-files-ore.s3.us-west-2.amazonaws.com/resources/3months/_xiwMFnn0qCA-mDZaDcv7Sbx6mY~zfjMyJFF-vRnpsbCeseKMC6eatc_diff.png", "original": "https://s3.us-west-2.amazonaws.com/vp-files-ore/resources/3months/_xiwMFnn0qCA-mDZaDcv7Sbx6mY.png", "change": "11.107982999472853 %", "view_changes": "https://visualping.io/autologin?redirect=%2Fjobs%2F5666044%3Fmode%3Dvisual", "text_changes": "https://vp-files-ore.s3.us-west-2.amazonaws.com/resources/3months/_xiwMFnn0qCA-mDZaDcv7Sbx6mY~zfjMyJFF-vRnpsbCeseKMC6eatc_diff.html", "added_text": "Entity ABC August 22, 2024", "removed_text": "", "summarizer": "A new entity, 'Entity ABC', has been added with a date of August 22, 2024.", "important": "no analyzer call" }]
 
 // Create HTTP server and integrate with Socket.IO
 const server = http.createServer(app);
